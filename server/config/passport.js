@@ -8,7 +8,7 @@ passport.use(
     {
       clientID: process.env.GOOGLE_CLIENT_ID,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-      callbackURL: "https://mock-ai-qi1j.onrender.com/api/auth/google/callback", // adjust for prod
+      callbackURL: "http://localhost:4000/api/auth/google/callback", // adjust for prod
     },
     async (accessToken, refreshToken, profile, done) => {
       try {

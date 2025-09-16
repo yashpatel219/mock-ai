@@ -8,7 +8,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { generateFeedback } from "../uitls/feedback.js";
 
 // API base URL
-const API_BASE_URL = import.meta.env.VITE_API_URL || "https://mock-ai-qi1j.onrender.com/api/auth";
+const API_BASE_URL = import.meta.env.VITE_API_URL || "http://localhost:4000/api/auth";
 
 // Mock Auth Hook
 const useMockAuth = () => {
@@ -193,14 +193,14 @@ export default function InterviewDashboard() {
       try {
         // Create session
         const sessionRes = await axios.post(
-          "https://mock-ai-qi1j.onrender.com/api/sessions",
+          "http://localhost:4000/api/sessions",
           { role: role?.name || role, category: category?.name || category, responses: [] },
           { headers: { Accept: "application/json" }, credentials: "include" }
         );
         setSessionId(sessionRes.data._id);
 
         // Fetch questions
-        const res = await axios.get("https://mock-ai-qi1j.onrender.com/api/questions", {
+        const res = await axios.get("http://localhost:4000/api/questions", {
           headers: { Accept: "application/json" },
           credentials: "include",
         });
@@ -283,7 +283,7 @@ const fetchSessions = async (retryCount = 3, delay = 1000) => {
   try {
     for (let attempt = 1; attempt <= retryCount; attempt++) {
       try {
-        const res = await axios.get("https://mock-ai-qi1j.onrender.com/api/sessions", {
+        const res = await axios.get("http://localhost:4000/api/sessions", {
           headers: { Accept: "application/json" },
           withCredentials: true,
         });
@@ -432,7 +432,7 @@ const fetchSessions = async (retryCount = 3, delay = 1000) => {
 
     // Save response to backend
     const saveRes = await axios.post(
-      "https://mock-ai-qi1j.onrender.com/api/responses",
+      "http://localhost:4000/api/responses",
       {
         questionId: current._id,
         question: current.text,
@@ -448,7 +448,7 @@ const fetchSessions = async (retryCount = 3, delay = 1000) => {
     if (sessionId) {
       try {
         await axios.patch(
-          `https://mock-ai-qi1j.onrender.com/api/sessions/${sessionId}`,
+          `http://localhost:4000/api/sessions/${sessionId}`,
           { responseId: saveRes.data._id, rating: feedbackData.rating },
           { headers: { Accept: "application/json" }, credentials: "include" }
         );
