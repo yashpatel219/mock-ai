@@ -1,5 +1,5 @@
-export const GOOGLE_LOGIN_URL = "http://localhost:4000/api/auth/google";
-export const DASHBOARD_URL = "http://localhost:4000/api/auth/dashboard";
+// Use VITE_API_URL from your .env
+export const API_BASE_URL = `${import.meta.env.VITE_API_URL}/api/auth`;
 
-export const API_BASE_URL = "https://mock-ai123.vercel.app/api/auth";
-
+export const GOOGLE_LOGIN_URL = `${API_BASE_URL}/google`;
+export const DASHBOARD_URL = `${API_BASE_URL}/dashboard`;

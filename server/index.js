@@ -23,10 +23,16 @@ require('./config/passport');
 app.use(express.json());
 app.use(cookieParser());
 app.use(helmet());
-app.use(cors({
-  origin: 'https://mock-ai123.vercel.app',
-  credentials: true,
-}));
+app.use(
+  cors({
+    origin: [
+      "http://localhost:5173",          // Vite dev server
+      process.env.CLIENT_URL,           // Deployed frontend
+    ],
+    credentials: true,
+  })
+);
+
 app.use(passport.initialize());
 
 // ----- Routes -----
