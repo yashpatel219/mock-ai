@@ -1,8 +1,15 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 
 const SessionSchema = new mongoose.Schema({
-  userId: { type: String, required: true },
-  responses: { type: Array, default: [] },
-}, { timestamps: true });
+  responses: [
+    {
+      responseId: String,
+      rating: Number
+    }
+  ],
+  role: { type: String, default: "" },
+  category: { type: String, default: "" }
+  // remove userId completely
+});
 
-module.exports = mongoose.model('Session', SessionSchema);
+module.exports = mongoose.model("Session", SessionSchema);

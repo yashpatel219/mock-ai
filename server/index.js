@@ -24,7 +24,7 @@ app.use(express.json());
 app.use(cookieParser());
 app.use(helmet());
 app.use(cors({
-  origin: process.env.CLIENT_URL,
+  origin: 'http://localhost:5173',
   credentials: true,
 }));
 app.use(passport.initialize());
@@ -34,6 +34,9 @@ const authRoutes = require('./routes/auth');
 const questionRoutes = require('./routes/questions');
 const responseRoutes = require('./routes/responses');
 const sessionRoutes = require('./routes/sessions');
+const reviewRoutes = require('./routes/review');
+app.use('/api/review', reviewRoutes);
+
 
 app.use('/api/auth', authRoutes);
 app.use('/api/questions', questionRoutes);

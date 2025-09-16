@@ -1,1 +1,26 @@
 @import "tailwindcss";
+.digital-font {
+  font-family: 'Share Tech Mono', 'Courier New', monospace;
+}
+
+.digital-text {
+  text-shadow: 0 0 5px rgba(255, 145, 0, 0.7);
+}
+
+.digital-border {
+  box-shadow: 0 0 5px rgba(255, 145, 0, 0.3),
+              inset 0 0 5px rgba(255, 145, 0, 0.1);
+  border: 1px solid rgba(255, 145, 0, 0.3);
+}
+
+.digital-glow {
+  box-shadow: 0 0 5px rgba(255, 145, 0, 0.5);
+}
+
+.digital-glow-lg {
+  box-shadow: 0 0 15px rgba(255, 145, 0, 0.7);
+}
+
+.hover\:digital-glow-lg:hover {
+  box-shadow: 0 0 15px rgba(255, 145, 0, 0.7);
+}
