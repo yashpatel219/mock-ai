@@ -23,29 +23,7 @@ router.post('/', async (req, res) => {
     res.status(500).json({ error: err.message });
   }
 });
-
-router.patch('/:id', async (req, res) => {
-  try {
-    const { responseId, rating } = req.body;
-
-    const session = await Session.findById(req.params.id);
-    if (!session) {
-      return res.status(404).json({ message: "Session not found" });
-    }
-
-    session.responses.push({ responseId, rating });
-    await session.save();
-
-    res.json(session);
-  } catch (err) {
-    console.error("❌ Error updating session:", err);
-    res.status(500).json({ error: err.message });
-  }
-});
-
-
-
-// PATCH /api/sessions/current
+//PATCH /api/sessions/current
 router.patch('/current', async (req, res) => {
   try {
     const { responseId, rating } = req.body;
@@ -64,6 +42,25 @@ router.patch('/current', async (req, res) => {
     res.json(session);
   } catch (err) {
     console.error("❌ Error updating current session:", err);
+    res.status(500).json({ error: err.message });
+  }
+});
+
+router.patch('/:id', async (req, res) => {
+  try {
+    const { responseId, rating } = req.body;
+
+    const session = await Session.findById(req.params.id);
+    if (!session) {
+      return res.status(404).json({ message: "Session not found" });
+    }
+
+    session.responses.push({ responseId, rating });
+    await session.save();
+
+    res.json(session);
+  } catch (err) {
+    console.error("❌ Error updating session:", err);
     res.status(500).json({ error: err.message });
   }
 });
