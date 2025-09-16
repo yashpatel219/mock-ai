@@ -7,16 +7,13 @@ const Login = () => {
   const [searchParams] = useSearchParams();
   const [isProcessing, setIsProcessing] = useState(false);
   const [message, setMessage] = useState("");
-
-  useEffect(() => {
-    // Check if we're returning from Google OAuth with a success indicator
-    const success = searchParams.get('success');
-    const fromAuth = searchParams.get('fromAuth');
-    
-    if (success === 'true' || fromAuth === 'true') {
-      completeAuthProcess();
-    }
-  }, [searchParams, navigate]);
+useEffect(() => {
+  const success = searchParams.get('success');
+  
+  if (success === 'true') {
+    completeAuthProcess();
+  }
+}, [searchParams, navigate]);
 
   const completeAuthProcess = async () => {
     setIsProcessing(true);

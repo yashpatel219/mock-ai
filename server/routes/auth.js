@@ -37,6 +37,7 @@ router.get(
 // @route   GET /api/auth/google/callback
 // @desc    Google auth callback
 // @route   GET /api/auth/google/callback
+
 router.get(
   "/google/callback",
   passport.authenticate("google", {
@@ -71,15 +72,16 @@ router.get(
         user.location?.trim() !== "" &&
         user.targetCompany?.trim() !== "";
 
-      // Redirect based on profile completeness with fromAuth parameter
+      // Redirect without query params
       const redirectTo = isProfileComplete ? "/categories" : "/profile-setup";
-      res.redirect(`${process.env.CLIENT_URL}${redirectTo}?fromAuth=true`);
+      res.redirect(`${process.env.CLIENT_URL}${redirectTo}`);
     } catch (err) {
       console.error("💥 Error in Google callback:", err.message);
       res.redirect(`${process.env.CLIENT_URL}/login?error=server_error`);
     }
   }
 );
+
 
 
 // @desc    Get logged-in user
