@@ -41,27 +41,29 @@ const questionRoutes = require('./routes/questions');
 const responseRoutes = require('./routes/responses');
 const sessionRoutes = require('./routes/sessions');
 const reviewRoutes = require('./routes/review');
+
 app.use('/api/review', reviewRoutes);
-
-
 app.use('/api/auth', authRoutes);
 app.use('/api/questions', questionRoutes);
 app.use('/api/responses', responseRoutes);
 app.use('/api/sessions', sessionRoutes);
 
-// Simple welcome route
-app.get('/', (req, res) => {
+// Simple welcome route (API root)
+app.get('/api', (req, res) => {
   res.send('AI Mock Interview API is running');
 });
 
-// Serve frontend in production (optional)
+// Serve frontend in production
 if (process.env.NODE_ENV === 'production') {
-  app.use(express.static(path.join(__dirname, 'client/build')));
-  app.get(/.*/, (req, res) => {
-    res.sendFile(path.join(__dirname, 'client/build', 'index.html'));
+  const frontendPath = path.join(__dirname, 'client', 'dist');
+  app.use(express.static(frontendPath));
+
+  // Catch-all to support React Router
+  app.get('*', (req, res) => {
+    res.sendFile(path.resolve(frontendPath, 'index.html'));
   });
 }
 
 // Start server
 const PORT = process.env.PORT || 4000;
-app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+app.listen(PORT, () => console.log(`🚀 Server running on port ${PORT}`));
