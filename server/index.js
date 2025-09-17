@@ -55,10 +55,10 @@ app.get('/api', (req, res) => {
 
 // Serve frontend in production
 if (process.env.NODE_ENV === 'production') {
-  const frontendPath = path.join(__dirname, 'client', 'dist');
+  const frontendPath = path.join(__dirname, 'client', 'mock-ai', 'dist');
   app.use(express.static(frontendPath));
 
-  // Catch-all to support React Router
+  // Catch-all for React Router routes (e.g. /categories, /profile-setup, etc.)
   app.get('*', (req, res) => {
     res.sendFile(path.resolve(frontendPath, 'index.html'));
   });
