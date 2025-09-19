@@ -193,14 +193,14 @@ export default function InterviewDashboard() {
       try {
         // Create session
         const sessionRes = await axios.post(
-          "http://localhost:4000/api/sessions",
+          "https://mock-ai-1-8xa5.onrender.com/api/sessions",
           { role: role?.name || role, category: category?.name || category, responses: [] },
           { headers: { Accept: "application/json" }, credentials: "include" }
         );
         setSessionId(sessionRes.data._id);
 
         // Fetch questions
-        const res = await axios.get("http://localhost:4000/api/questions", {
+        const res = await axios.get("https://mock-ai-1-8xa5.onrender.com/api/questions", {
           headers: { Accept: "application/json" },
           credentials: "include",
         });
@@ -283,7 +283,7 @@ const fetchSessions = async (retryCount = 3, delay = 1000) => {
   try {
     for (let attempt = 1; attempt <= retryCount; attempt++) {
       try {
-        const res = await axios.get("http://localhost:4000/api/sessions", {
+        const res = await axios.get("https://mock-ai-1-8xa5.onrender.com/api/sessions", {
           headers: { Accept: "application/json" },
           withCredentials: true,
         });
@@ -432,7 +432,7 @@ const fetchSessions = async (retryCount = 3, delay = 1000) => {
 
     // Save response to backend
     const saveRes = await axios.post(
-      "http://localhost:4000/api/responses",
+      "https://mock-ai-1-8xa5.onrender.com/api/responses",
       {
         questionId: current._id,
         question: current.text,
@@ -448,7 +448,7 @@ const fetchSessions = async (retryCount = 3, delay = 1000) => {
     if (sessionId) {
       try {
         await axios.patch(
-          `http://localhost:4000/api/sessions/${sessionId}`,
+          `https://mock-ai-1-8xa5.onrender.com/api/sessions/${sessionId}`,
           { responseId: saveRes.data._id, rating: feedbackData.rating },
           { headers: { Accept: "application/json" }, credentials: "include" }
         );
