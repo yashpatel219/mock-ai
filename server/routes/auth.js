@@ -41,7 +41,7 @@ router.get(
 router.get(
   "/google/callback",
   passport.authenticate("google", {
-    failureRedirect: `${process.env.CLIENT_URL}/login?error=auth_failed`,
+    failureRedirect: `${process.env.FRONTEND_URL}/login?error=auth_failed`,
     session: false,
   }),
   async (req, res) => {
@@ -49,38 +49,39 @@ router.get(
       const { token, user } = req.user;
 
       console.log("🔐 Google auth successful, user:", {
-        id: user.id,
+        id: user._id,
         name: user.name,
         email: user.email,
       });
 
-      // Set token in cookie
+      // Set JWT in cookie
       res.cookie("auth-token", token, {
         httpOnly: true,
         secure: process.env.NODE_ENV === "production",
         sameSite: "Lax",
-        maxAge: 3600000, // 1 hour
+        maxAge: 3600 * 1000, // 1 hour
         path: "/",
       });
 
-      // Determine profile completeness
+      // Determine if profile is complete
       const isProfileComplete =
-        user.desiredPosition?.trim() !== "" &&
+        user.desiredPosition?.trim() &&
         user.experience > 0 &&
-        user.department?.trim() !== "" &&
-        user.industry?.trim() !== "" &&
-        user.location?.trim() !== "" &&
-        user.targetCompany?.trim() !== "";
+        user.department?.trim() &&
+        user.industry?.trim() &&
+        user.location?.trim() &&
+        user.targetCompany?.trim();
 
-      // Redirect without query params
+      // Redirect to frontend
       const redirectTo = isProfileComplete ? "/categories" : "/profile-setup";
-      res.redirect(`${process.env.CLIENT_URL}${redirectTo}`);
+      res.redirect(`${process.env.FRONTEND_URL}${redirectTo}`);
     } catch (err) {
-      console.error("💥 Error in Google callback:", err.message);
-      res.redirect(`${process.env.CLIENT_URL}/login?error=server_error`);
+      console.error("💥 Error in Google callback:", err);
+      res.redirect(`${process.env.FRONTEND_URL}/login?error=server_error`);
     }
   }
 );
+
 
 
 
