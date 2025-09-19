@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { API_BASE_URL } from "../api/auth";
 
 const ProfileSetup = () => {
   const navigate = useNavigate();
@@ -11,6 +10,10 @@ const ProfileSetup = () => {
     industry: "",
     location: "",
     targetCompany: "",
+    education: "",
+    skills: "",
+    linkedin: "",
+    github: "",
   });
 
   const handleChange = (e) => {
@@ -20,15 +23,20 @@ const ProfileSetup = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const res = await fetch(`${API_BASE_URL}/profile-setup`, {
-        method: "POST",
-        credentials: "include",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(form),
-      });
+      const res = await fetch(
+        "https://mock-ai-1-8xa5.onrender.com/api/auth/profile-setup",
+        {
+          method: "POST",
+          credentials: "include", // send cookies
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(form),
+        }
+      );
+
       if (res.ok) {
-        // Redirect to category page after saving profile
-        navigate("/categories");
+        navigate("/categories"); // redirect after profile save
+      } else {
+        console.error("Failed to save profile:", await res.text());
       }
     } catch (err) {
       console.error("Error saving profile:", err);
@@ -41,67 +49,33 @@ const ProfileSetup = () => {
         onSubmit={handleSubmit}
         className="bg-white p-8 rounded-xl shadow-md w-full max-w-lg space-y-4 border border-orange-200"
       >
-        <h2 className="text-2xl font-bold mb-4 text-center text-orange-800">Complete Your Profile</h2>
+        <h2 className="text-2xl font-bold mb-4 text-center text-orange-800">
+          Complete Your Profile
+        </h2>
 
-        <input
-          type="text"
-          name="desiredPosition"
-          placeholder="Desired Position"
-          value={form.desiredPosition}
-          onChange={handleChange}
-          className="w-full p-3 border border-orange-200 rounded-md focus:ring-2 focus:ring-orange-500 focus:border-orange-500"
-          required
-        />
-
-        <input
-          type="number"
-          name="experience"
-          placeholder="Years of Experience"
-          value={form.experience}
-          onChange={handleChange}
-          className="w-full p-3 border border-orange-200 rounded-md focus:ring-2 focus:ring-orange-500 focus:border-orange-500"
-          required
-        />
-
-        <input
-          type="text"
-          name="department"
-          placeholder="Department"
-          value={form.department}
-          onChange={handleChange}
-          className="w-full p-3 border border-orange-200 rounded-md focus:ring-2 focus:ring-orange-500 focus:border-orange-500"
-          required
-        />
-
-        <input
-          type="text"
-          name="industry"
-          placeholder="Industry"
-          value={form.industry}
-          onChange={handleChange}
-          className="w-full p-3 border border-orange-200 rounded-md focus:ring-2 focus:ring-orange-500 focus:border-orange-500"
-          required
-        />
-
-        <input
-          type="text"
-          name="location"
-          placeholder="Location"
-          value={form.location}
-          onChange={handleChange}
-          className="w-full p-3 border border-orange-200 rounded-md focus:ring-2 focus:ring-orange-500 focus:border-orange-500"
-          required
-        />
-
-        <input
-          type="text"
-          name="targetCompany"
-          placeholder="Target Company"
-          value={form.targetCompany}
-          onChange={handleChange}
-          className="w-full p-3 border border-orange-200 rounded-md focus:ring-2 focus:ring-orange-500 focus:border-orange-500"
-          required
-        />
+        {[
+          { name: "desiredPosition", type: "text", placeholder: "Desired Position" },
+          { name: "experience", type: "number", placeholder: "Years of Experience" },
+          { name: "department", type: "text", placeholder: "Department" },
+          { name: "industry", type: "text", placeholder: "Industry" },
+          { name: "location", type: "text", placeholder: "Location" },
+          { name: "targetCompany", type: "text", placeholder: "Target Company" },
+          { name: "education", type: "text", placeholder: "Education" },
+          { name: "skills", type: "text", placeholder: "Skills (comma separated)" },
+          { name: "linkedin", type: "text", placeholder: "LinkedIn URL" },
+          { name: "github", type: "text", placeholder: "GitHub URL" },
+        ].map((field) => (
+          <input
+            key={field.name}
+            type={field.type}
+            name={field.name}
+            placeholder={field.placeholder}
+            value={form[field.name]}
+            onChange={handleChange}
+            className="w-full p-3 border border-orange-200 rounded-md focus:ring-2 focus:ring-orange-500 focus:border-orange-500"
+            required
+          />
+        ))}
 
         <button
           type="submit"
