@@ -26,7 +26,7 @@ app.use(
   cors({
     origin: [
       "http://localhost:5173",        // local frontend
-      process.env.CLIENT_URL,         // deployed frontend
+      process.env.FRONTEND_URL,         // deployed frontend
     ],
     credentials: true,
   })
