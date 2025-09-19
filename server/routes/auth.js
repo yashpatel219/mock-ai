@@ -56,12 +56,13 @@ router.get(
 
       // Set JWT in cookie
       res.cookie("auth-token", token, {
-        httpOnly: true,
-        secure: process.env.NODE_ENV === "production",
-        sameSite: "Lax",
-        maxAge: 3600 * 1000, // 1 hour
-        path: "/",
-      });
+  httpOnly: true,
+  secure: process.env.NODE_ENV === "production", // must be true in prod for sameSite=None
+  sameSite: process.env.NODE_ENV === "production" ? "None" : "Lax", // cross-site cookies need None
+  maxAge: 3600 * 1000, // 1 hour
+  path: "/",
+});
+
 
       // Determine if profile is complete
       const isProfileComplete =
