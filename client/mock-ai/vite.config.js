@@ -5,11 +5,11 @@ import tailwindcss from '@tailwindcss/vite';
 export default defineConfig({
   plugins: [react(), tailwindcss()],
   build: {
-    outDir: 'dist',
+    outDir: 'dist',           // production folder
+    chunkSizeWarningLimit: 2000, // optional: suppress warnings for large chunks
   },
   server: {
-    port: 5173,
+    port: 5173,               // dev server port
   },
-  // ✅ Ensure paths resolve correctly in production
-  base: '/',
+  base: '/',                  // ✅ ensures assets load correctly in production
 });
