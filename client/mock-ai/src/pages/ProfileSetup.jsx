@@ -10,10 +10,7 @@ const ProfileSetup = () => {
     industry: "",
     location: "",
     targetCompany: "",
-    education: "",
-    skills: "",
-    linkedin: "",
-    github: "",
+  
   });
 
   const handleChange = (e) => {
@@ -60,10 +57,7 @@ const ProfileSetup = () => {
           { name: "industry", type: "text", placeholder: "Industry" },
           { name: "location", type: "text", placeholder: "Location" },
           { name: "targetCompany", type: "text", placeholder: "Target Company" },
-          { name: "education", type: "text", placeholder: "Education" },
-          { name: "skills", type: "text", placeholder: "Skills (comma separated)" },
-          { name: "linkedin", type: "text", placeholder: "LinkedIn URL" },
-          { name: "github", type: "text", placeholder: "GitHub URL" },
+       
         ].map((field) => (
           <input
             key={field.name}
